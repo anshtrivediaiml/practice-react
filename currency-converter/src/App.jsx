@@ -32,7 +32,9 @@ const currencyInfo=useCurrencyInfo(from);
           <InputBox label="From"  
           amount={amount}
           currencyOptions={options} 
-          onCurrencyChange={(currency)=>setAmount(amount)}
+          onCurrencyChange={(currency)=>{setAmount(amount);
+            setFrom(currency.toString());    
+          } } 
           selectCurrency={from}
          onAmountChange={(amount)=>setAmount(amount)}
           />
@@ -50,16 +52,16 @@ const currencyInfo=useCurrencyInfo(from);
           amount={convertedAmount}
           currencyOptions={options}
           onCurrencyChange={(currency)=>{
-            setTo(currency);
+            setTo(currency.toString());
            }}  amountDisable={true}
            selectCurrency={to}
+           onAmountChange={(amount)=>{setConvertedAmount(amount)}}
            />
           </div>
-        <button className='w-full bg-blue-600 text-white px-4 py-3 rounded-lg'>
+        <button className='w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-800 duration-200'>
           Convert {from.toUpperCase()} to {to.toUpperCase()}
         </button>
           
-
         </form>
 
         </div>
