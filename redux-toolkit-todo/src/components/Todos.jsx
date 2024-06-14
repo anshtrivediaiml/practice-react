@@ -1,23 +1,58 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {removeTodo} from '../features/todo/todoSlice'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeTodo, updateTodo } from '../features/todo/todoSlice';
 
 function Todos() {
-    const todos = useSelector(state => state.todos)
-    const dispatch = useDispatch()
+  const todos = useSelector(state => state.todos);
+  const dispatch = useDispatch();
+  const [input, setInput] = React.useState({});
+  const [edit, setEdit] = React.useState({});
+
+  const handleInputChange = (id, value) => {
+    setInput(prevState => ({ ...prevState, [id]: value }));
+  };
+
+  const handleEditToggle = (id, text) => {
+    setEdit(prevState => ({ ...prevState, [id]: !prevState[id] }));
+    console.log(edit[id]);
+    if (!edit[id]) {
+      // Initialize input state when entering edit mode
+      setInput(prevState => ({ ...prevState, [id]: text }));
+    } else {
+      // Dispatch update action when exiting edit mode
+      dispatch(updateTodo({ id, newText: input[id] }));
+    }
+  };
 
   return (
     <>
-    <div>Todos</div>
-    <ul className="list-none">
-        {todos.map((todo) => (
+      
+      <ul className="list-none">
+        {todos.map(todo => (
           <li
-            className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded"
+            className="mt-4 flex justify-between items-center bg-zinc-800 px-4 py-2 rounded hover:bg-zinc-900 duration-200"
             key={todo.id}
           >
-            <div className='text-white'>{todo.text}</div>
+            <div className="text-white">
+              <input
+                type="text"
+                value={input[todo.id] || todo.text}
+                onChange={(e) => handleInputChange(todo.id, e.target.value)}
+                className={`${edit[todo.id] ? 'outline-none rounded-md bg-zinc-600/10 text-white py-2' : 'py-2 outline-none bg-inherit'}`}
+                readOnly={!edit[todo.id]}
+                onClick={()=>handleEditToggle(todo.id, todo.text)}
+              />
+            </div>
+            <div className='flex gap-x-2'>
             <button
-             onClick={() => dispatch(removeTodo(todo.id))}
+              onClick={() => handleEditToggle(todo.id, todo.text)}
+              className={`${!edit[todo.id]?"bg-blue-500 hover:bg-blue-700":"bg-green-500 hover:bg-green-700"} text-white border-0 py-1 px-4 focus:outline-none rounded text-md`}
+            >
+              {edit[todo.id] ? 'Save' : ' Edit'}
+            </button>
+
+            <button
+              onClick={() => dispatch(removeTodo(todo.id))}
               className="text-white bg-red-500 border-0 py-1 px-4 focus:outline-none hover:bg-red-600 rounded text-md"
             >
               <svg
@@ -35,11 +70,12 @@ function Todos() {
                 />
               </svg>
             </button>
+            </div>
           </li>
         ))}
       </ul>
     </>
-  )
+  );
 }
 
-export default Todos
+export default Todos;
