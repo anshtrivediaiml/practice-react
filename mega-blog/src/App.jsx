@@ -5,6 +5,7 @@ import authService from './appwrite/auth';
 import { login,logout } from './store/authSlice';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import Button from './components/Button';
 
 function App() {
 
@@ -26,10 +27,9 @@ function App() {
     
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block '>
-        <Header/>
-       
-        <Footer />
-
+      <Button className='bg-black text-white font-semibold w-32 h-11 hover:bg-slate-700'>
+        Demo Text 
+      </Button>
       </div>
       </div>
     
