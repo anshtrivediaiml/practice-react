@@ -3,11 +3,11 @@ import authService from '../appwrite/auth'
 import { Link,useNavigate } from 'react-router-dom'
 import { login } from '../store/authSlice'
 import { useDispatch } from 'react-redux'
-import {Button} from './Button'
-import {Input} from './Input'
-import {Logo} from './Logo'
+import Button from './Button'
+import Input from './Input'
+import Logo from './Logo'
 import { useForm } from 'react-hook-form'
-function Signup() {
+export const  Signup=()=> {
     const navigate=useNavigate();
     const dispatch=useDispatch(); 
     const [error,setError]=useState('');
