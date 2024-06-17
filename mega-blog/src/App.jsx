@@ -27,9 +27,8 @@ function App() {
     
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block '>
-      <Button className='bg-black text-white font-semibold w-32 h-11 hover:bg-slate-700'>
-        Demo Text 
-      </Button>
+        <Header/>
+        <Footer/>
       </div>
       </div>
     
