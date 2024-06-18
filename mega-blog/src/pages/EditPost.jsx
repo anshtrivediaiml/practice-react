@@ -5,7 +5,7 @@ import storageService from '../appwrite/config'
 import { useNavigate, useParams } from 'react-router-dom'
 
 function EditPost() {
-    const [post,setPost]=useState([])
+    const [post,setPost]=useState(null)
     const {slug}=useParams()   
     const navigate=useNavigate()
 
@@ -14,8 +14,6 @@ function EditPost() {
             storageService.getPost(slug).then((post)=>{
                 if(post){
                     setPost(post)
-                }else{
-                    navigate('/404')
                 }
             })
         }else{

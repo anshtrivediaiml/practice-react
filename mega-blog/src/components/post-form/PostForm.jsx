@@ -1,10 +1,10 @@
 import React,{useCallback} from 'react'
 import { useForm } from 'react-hook-form'
-import {Button} from '../Button'
-import {Input} from '../Input'
-import {Select} from '../Select'
-import {RTE} from '../RTE'
-import storageService, { StorageService } from '../../appwrite/config'
+import Button from '../Button'
+import Input from '../Input'
+import Select from '../Select'
+import RTE from '../RTE'
+import storageService from '../../appwrite/config'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
@@ -12,7 +12,7 @@ function PostForm({post}) {
  const {register,handleSubmit,watch,setValue,control,getValues}=useForm({
     defaultValues:{
         title:post?.title || '',
-        slug:post?.slug || '',
+        slug:post?.$id || '',
         content:post?.content || '',
         status:post?.status || 'active'
         
@@ -20,20 +20,20 @@ function PostForm({post}) {
  });
 
  const navigate=useNavigate();
- const {user}=useSelector(state=>state.user.userData);
+ const userData=useSelector(state=>state.auth.userData);
 
 const submit=async(data)=>{
     if(post){
         //update post
-       const file= data.image[0]? StorageService.uploadFile(data.image[0]):null;
+       const file= data.image[0]? await storageService.uploadFile(data.image[0]):null;
 
       if(file){
         storageService.deleteFile(post.featuredImage);
       }
       const dbPost=await storageService.updatePost(post.$id,{
         ...data,
-        featuredImage: file ?file?.$id:
-        undefined
+        featuredImage: file ? file.$id:
+        undefined,
       })
 
       if(dbPost){
@@ -44,8 +44,8 @@ const submit=async(data)=>{
         //create post
         const file=await storageService.uploadFile(data.image[0]);
         if(file){
-            const fileId=file.$id
-            data.featuredImage=fileId
+            const fileId=file.$id;
+            data.featuredImage=fileId;
 
           const dbPost=await storageService.createPost({
                 ...data,
@@ -62,17 +62,17 @@ const submit=async(data)=>{
 const slugTransform=useCallback((value)=>{
     if(value && typeof value==='string'){
        return value.trim().toLowerCase()
-       .replace(/^[a-zA-Z\d\s]+/g,'-').replace(/\s/g,'-')
+       .replace(/[^a-zA-Z\d\s]+/g,'-').replace(/\s/g,'-');
     }
-    return ''
-},[])
+    return '';
+},[]);
 
 React.useEffect(()=>{
     const subscription=watch((value,{name})=>{
         if(name==='title'){
-            setValue('slug',slugTransform(value.title,{
+            setValue('slug',slugTransform(value.title),{
                 shouldValidate:true,
-            }))
+            })
         }
     })
 
@@ -97,7 +97,7 @@ React.useEffect(()=>{
                 className="mb-4"
                 {...register("slug", { required: true })}
                 onInput={(e) => {
-                    setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                    setValue("slug", slugTransform(e.currentTarget.value), {shouldValidate: true });
                 }}
             />
             <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
@@ -113,7 +113,7 @@ React.useEffect(()=>{
             {post && (
                 <div className="w-full mb-4">
                     <img
-                        src={appwriteService.getFilePreview(post.featuredImage)}
+                        src={storageService.getFilePreview(post.featuredImage)}
                         alt={post.title}
                         className="rounded-lg"
                     />

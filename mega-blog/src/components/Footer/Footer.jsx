@@ -37,22 +37,6 @@ function Footer() {
                     className="text-base font-medium text-gray-900 hover:text-gray-700"
                     to="/"
                   >
-                    Features
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    to="/"
-                  >
-                    Features
-                  </Link>
-                </li>
-                <li className="mb-4">
-                  <Link
-                    className="text-base font-medium text-gray-900 hover:text-gray-700"
-                    to="/"
-                  >
                     Pricing
                   </Link>
                 </li>
@@ -127,7 +111,7 @@ function Footer() {
                     className="text-base font-medium text-gray-900 hover:text-gray-700"
                     to="/"
                   >
-                    Terms &amp; Conditions
+                  Terms &amp; Conditions
                   </Link>
                 </li>
                 <li className="mb-4">

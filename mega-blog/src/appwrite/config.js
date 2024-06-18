@@ -35,7 +35,8 @@ export class StorageService {
 
   async updatePost(slug,{title,content,featuredImage,status}){
     try{
-       return await this.databases.updateDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID,import.meta.env.VITE_APPWRITE_COLLECTION_ID,slug,{
+       return await this.databases.updateDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID,
+       import.meta.env.VITE_APPWRITE_COLLECTION_ID,slug,{
         title,
         content,
         featuredImage,
@@ -62,7 +63,8 @@ export class StorageService {
 
   async getPost(slug){
     try{
-       return await this.databases.getDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID,import.meta.env.VITE_APPWRITE_COLLECTION_ID,slug);
+       return await this.databases.getDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_COLLECTION_ID,slug);
     }catch(error){
         console.log(error);
       return false;
@@ -71,7 +73,7 @@ export class StorageService {
 
   async getPosts(queries=[Query.equal('status','active')]){
     try{
-    return await this.databases.listDocuments(import.meta.env.VITE_APPWRITE_DATABASE_ID,import.meta.env.VITE_APPWRITE_COLLECTION_ID,queries);
+    return await this.databases.listDocuments(import.meta.env.VITE_APPWRITE_DATABASE_ID,import.meta.env.VITE_APPWRITE_COLLECTION_ID,queries,)
 
     }
     catch(error){

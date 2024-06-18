@@ -18,11 +18,10 @@ export const  Signup=()=> {
         try{
             const userData=await authService.createAccount(data);
             if(userData){
-              const userData=  await authService.getCurrentUser();
-              if(userData){
-                dispatch(login(userData));
+              const userData=await authService.getCurrentUser();
+  if(userData)dispatch(login(userData));
                 navigate('/');
-              }
+              
             }
         }catch(err){
             setError(err.message)
@@ -50,7 +49,7 @@ export const  Signup=()=> {
                 <Input 
                 label='Name:'
                 placeholder='Enter your Name'
-                type='email'
+                type='name'
                 {...register('name',{required:true})}
                 />
                  <Input 
