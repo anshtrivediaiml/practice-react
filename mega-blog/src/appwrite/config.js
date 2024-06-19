@@ -16,8 +16,7 @@ export class Service{
 
     async createPost({title, slug, content, featuredImage, status, userId}){
         try {
-            console.log("createPost tak toh pohoch gaye bhai")
-            const response = await this.databases.createDocument(
+              const response = await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug, // Ensure this is unique or use ID.unique() for a generated ID

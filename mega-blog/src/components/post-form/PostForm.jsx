@@ -78,7 +78,7 @@ export default function PostForm({ post }) {
                 <Input
                     label="Title :"
                     placeholder="Title"
-                    className="mb-4"
+                    className="mb-4 "
                     {...register("title", { required: true })}
                 />
                 <Input
@@ -87,8 +87,6 @@ export default function PostForm({ post }) {
                     className="mb-4"
                     {...register("slug", { required: true })}
                     onInput={(e) => {
-                        console.log("slug called")
-                        console.log(e.currentTarget.value)
                         setValue("slug", slugTransform(e.currentTarget.value)
                     , { shouldValidate: true });
                     }}

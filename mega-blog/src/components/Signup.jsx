@@ -54,6 +54,7 @@ function Signup() {
                         {...register("name", {
                             required: true,
                         })}
+                        className="bg-gray-700/5"
                         />
                         <Input
                         label="Email: "
@@ -66,6 +67,7 @@ function Signup() {
                                 "Email address must be a valid address",
                             }
                         })}
+                        className="bg-gray-700/5"
                         />
                         <Input
                         label="Password: "
@@ -73,8 +75,9 @@ function Signup() {
                         placeholder="Enter your password"
                         {...register("password", {
                             required: true,})}
+                            className="bg-gray-700/5"
                         />
-                        <Button type="submit" className="w-full">
+                        <Button type="submit" className="w-full hover:bg-blue-700 duration-200">
                             Create Account
                         </Button>
                     </div>
