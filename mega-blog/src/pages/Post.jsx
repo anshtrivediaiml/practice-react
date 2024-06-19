@@ -1,10 +1,10 @@
-import React,{useState,useEffect} from 'react'
-import Container from '../components/container/Container'
-import Button from '../components/Button'
-import { Link,useNavigate,useParams } from 'react-router-dom'
-import storageService from '../appwrite/config'
-import parse from 'html-react-parser'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import appwriteService from "../appwrite/config";
+import { Button, Container } from "../components";
+import parse from "html-react-parser";
+import { useSelector } from "react-redux";
+
 export default function Post() {
     const [post, setPost] = useState(null);
     const { slug } = useParams();
@@ -16,7 +16,7 @@ export default function Post() {
 
     useEffect(() => {
         if (slug) {
-            storageService.getPost(slug).then((post) => {
+            appwriteService.getPost(slug).then((post) => {
                 if (post) setPost(post);
                 else navigate("/");
             });
@@ -24,9 +24,9 @@ export default function Post() {
     }, [slug, navigate]);
 
     const deletePost = () => {
-        storageService.deletePost(post.$id).then((status) => {
+        appwriteService.deletePost(post.$id).then((status) => {
             if (status) {
-                storageService.deleteFile(post.featuredImage);
+                appwriteService.deleteFile(post.featuredImage);
                 navigate("/");
             }
         });
@@ -37,7 +37,7 @@ export default function Post() {
             <Container>
                 <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={storageService.getFilePreview(post.featuredImage)}
+                        src={appwriteService.getFilePreview(post.featuredImage)}
                         alt={post.title}
                         className="rounded-xl"
                     />
